@@ -40,3 +40,26 @@ abline(lm(choco$Rating ~ choco$Cocoa_Percent))
 ```
 
 The correlation calculated shows an insignificant correlation coefficient. If there was a relationship between ratings and cocao percentage, negative or positive, the value would be 0.8 or greater or -0.8 or less. 
+The plot shows no obvious trend in the data either. All the points are fairly random and distributed.
+
+4. How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
+
+```{r}
+
+```
+
+5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
+
+The one analysis I will be doing is grouping the ratings by the company that made each chocolate. Then compare companies and their average, mean, ratings. This will show if the company can effect or determine good or bad ratings.
+
+```{r}
+
+library("dplyr")
+means <-  aggregate(choco$Rating, by=list(Company=choco$Company), FUN=mean)
+rates <- means$x
+names(rates) <- means$Company
+top5 <- head(sort(rates, decreasing = TRUE), n= 5)
+top5
+
+```
+
