@@ -1,5 +1,5 @@
 ---
-title: "individual.Rmd"
+title: "individual1.Rmd"
 author: "Rabsa Naseer"
 date: "9/8/2020"
 output: html_document
@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+1. How are the ratings distributed? Create both a histogram and a boxplot and describe them. Don’t forget to mention outliers, if there are any.
 ```{r}
 choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
 str(choco) 
@@ -16,5 +16,22 @@ str(choco)
 ratings <- choco$Rating
 boxplot(ratings)
 hist(ratings)
+```
+
+It looks like there are outliers at 1.0, 1.5, and 1.75,looking at both the histogram and boxplot, were outliers are values that don't "fit in" with the rest of the data (indicated by individual dots in the boxplot).
+
+2. How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
+
+```{r}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+str(choco) 
+years <- choco$Date
+barplot(table(years), main = "Ratings Per Year", xlab ="Year",  ylab = "# o f Ratings")
+```
+
+3. Do ratings depend on the cacao percentage of a chocolate bar? Create both numerical and graphical summaries, and explain.
+
+```{r}
+
 ```
 
