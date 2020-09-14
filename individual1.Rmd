@@ -24,14 +24,19 @@ It looks like there are outliers at 1.0, 1.5, and 1.75,looking at both the histo
 
 ```{r}
 choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
-str(choco) 
+
 years <- choco$Date
-barplot(table(years), main = "Ratings Per Year", xlab ="Year",  ylab = "# o f Ratings")
+barplot(table(years), main = "Ratings Per Year", xlab ="Year",  ylab = "# of Ratings")
 ```
 
 3. Do ratings depend on the cacao percentage of a chocolate bar? Create both numerical and graphical summaries, and explain.
 
 ```{r}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+cor(choco$Rating, choco$Cocoa_Percent)
 
+plot(choco$Cocoa_Percent, choco$Rating)
+abline(lm(choco$Rating ~ choco$Cocoa_Percent))
 ```
 
+The correlation calculated shows an insignificant correlation coefficient. If there was a relationship between ratings and cocao percentage, negative or positive, the value would be 0.8 or greater or -0.8 or less. 
