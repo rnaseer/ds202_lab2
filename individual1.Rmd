@@ -45,7 +45,13 @@ The plot shows no obvious trend in the data either. All the points are fairly ra
 4. How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
 
 ```{r}
-
+chars <-  aggregate(choco$Rating, by=list(Characteristics1=choco$Characteristics1), FUN=mean)
+char_rates <- chars$x
+names(char_rates) <- chars$Characteristics1
+top15 <- head(sort(char_rates, decreasing = TRUE), n= 15)
+top15
+worst15 <- head(sort(char_rates, decreasing = FALSE), n= 15)
+worst15
 ```
 
 5. Brainstorm two analyses you would like to perform with your teammate. Describe in plain language what comparisons are you making. Create suitable numerical and graphical summaries for your analyses. Describe the results.
@@ -54,12 +60,12 @@ The one analysis I will be doing is grouping the ratings by the company that mad
 
 ```{r}
 
-library("dplyr")
 means <-  aggregate(choco$Rating, by=list(Company=choco$Company), FUN=mean)
 rates <- means$x
 names(rates) <- means$Company
 top5 <- head(sort(rates, decreasing = TRUE), n= 5)
 top5
-
+worst5 <- head(sort(rates, decreasing = FALSE), n= 5)
+worst5
 ```
 
