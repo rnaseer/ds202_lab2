@@ -1,6 +1,6 @@
 ---
 title: "team.Rmd"
-author: "Rabsa Naseer"
+author: "Rabsa Naseer and Sierra Hoff"
 date: "9/13/2020"
 output: html_document
 ---
@@ -58,6 +58,14 @@ hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic3")
 
 orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Characteristics4), mean)
 hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic4")
+
+chars <-  aggregate(choco$Rating, by=list(Characteristics1=choco$Characteristics1), FUN=mean)
+char_rates <- chars$x
+names(char_rates) <- chars$Characteristics1
+top15 <- head(sort(char_rates, decreasing = TRUE), n= 15)
+top15
+worst15 <- head(sort(char_rates, decreasing = FALSE), n= 15)
+worst15
 ```
 
 Question 5a: grouping the ratings by the company that made each chocolate. Then compare companies and their average, mean, ratings. This will show if the company can effect or determine good or bad ratings. This shows us the top five and worst five companies and their average ratings for their chocolates.
