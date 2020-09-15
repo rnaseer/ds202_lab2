@@ -1,0 +1,107 @@
+---
+title: "individual2.html"
+author: "Sierra Hoff"
+date: "9/13/2020"
+output: html_document
+---
+
+Question 1: How are the ratings distributed? Create both a histogram and a boxplot and describe them. Don’t forget to mention outliers, if there are any. 
+
+The data is distributed along a roughly bell shaped curve skewed to the left. the median is at 3.18 points while the IQR is .5 points. There are 4 outliers with a rating at or below 2.
+
+```{r Question_1}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv")
+
+
+hist(choco$Rating, main= "Histogram of choco rating", xlab="Rating")
+boxplot(choco$Rating, main= "Boxplot of choco rating", ylab="Rating")
+summary(choco$Rating)
+
+```
+
+Question 2: How does the number of ratings depend on the year? Draw a bar chart of the number of reports.
+
+The number of ratings seems to have mildly increased form years 2006 to 2014 before somewhat stabilizing. There were an usually low amount of ratings in 2016 and 2020 isn't which explaines its low amount of entries.
+
+```{r Question_2}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+
+hist(choco$Date)
+```
+
+
+Question 3: Do ratings depend on the cacao percentage of a chocolate bar? Create both numerical and graphical summaries, and explain.
+
+The ratings mildly favor Cacao percentages at 60% and 70% but significantly dislike Cacao percentages around 100%. For the summary statitastices and the scatter plot, cacao percent > 95% was removed due to the boxplot of it's ratings being an outlier. Less that 1% of the rating can be explained by the cacao percent in the modified scatterplot.
+
+```{r Question_3}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+
+percent <- choco$Cocoa_Percent
+rating <- choco$Rating
+
+plot(percent[percent < 95], rating[percent <95])
+abline(lm(rating[percent < 95] ~ percent[percent <95]), col="red")
+boxplot(rating ~ round(percent/10))
+summary(lm(percent[percent < 95] ~ rating[percent <95]))
+
+#r squared only
+summary(lm(percent[percent < 95] ~ rating[percent <95]))$r.squared
+
+```
+
+Queastion 4: How do different characteristics of the chocolate compare? To elaborate, which characteristics tend to be more favorable and which ones are not? Create both numerical and graphical summaries, and explain.
+
+```{r Queastion_4}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+
+orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Characteristics1), mean)
+hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic1")
+
+orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Characteristics2), mean)
+hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic2")
+
+orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Characteristics3), mean)
+hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic3")
+
+orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Characteristics4), mean)
+hist(orgin_grouped[,2], main ="mean rating grouped by bean charisttic4")
+
+
+
+```
+
+Question 5a: does where the cacao bean come from or where the chocolate is produced matter more. 5b to what degree does this matter?
+
+It seems that in the top ten producing countries, the coco bean origin and the country where the chocolate is produced have little effect on the quality, though the country producing the chocolate has more effect baised on its greater variation in boxplots. However when the data is looked at in whole the mean value in both histograms has a range of over 1 point and it is not normally distrbuted like you would expect from taking means randomly from a sample.
+
+```{r Question_5b}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv")
+
+
+#sort(table(choco$Bean_Origin),decreasing = TRUE)
+#sort(table(choco$Location),decreasing = TRUE)
+
+location <- c("U.S.A.", "France","Canada", "U.K.", "Italy", "Belgium", "Ecuador", "Australia", "Switzerland", "Germany" )
+
+orgin <- c("Venezuela","Peru","Ecuador","Dominican Republic","Madagascar","Blend","Nicaragua","Brazil","Bolivia","Belize")
+
+loc_grouped <- aggregate(choco[, "Rating"], list(choco$Location), mean)
+hist(loc_grouped[,2], main ="mean rating grouped by county produced")
+
+orgin_grouped <- aggregate(choco[, "Rating"], list(choco$Bean_Origin), mean)
+hist(orgin_grouped[,2], main ="mean rating grouped by bean orgin")
+
+
+top_orgin <- choco$Bean_Origin[choco$Bean_Origin %in% orgin]
+top_loc <- choco$Location[choco$Location %in% location ]
+
+boxplot(choco$Rating[choco$Location %in% location ] ~ top_loc, las=2)
+boxplot(choco$Rating[choco$Bean_Origin %in% orgin ] ~ top_orgin, las=2)
+
+
+```
+
+
+
+
